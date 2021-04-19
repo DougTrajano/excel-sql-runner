@@ -11,6 +11,13 @@ Nothing unreleased.
 
 ---
 
+## [0.1.1] - 2021-04-18
+
+### Changed
+
+- `Profiling Page` Small change in layout to display SQL-statement always.
+- Improvement in inference process to dtypes in `norm_df_dtypes()`.
+
 ## [0.1.0] - 2021-04-18
 
 ### Added

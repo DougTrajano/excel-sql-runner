@@ -16,7 +16,7 @@ This [application](https://share.streamlit.io/dougtrajano/excel-sql-runner/main.
 
 ### Docker
 
-To run Anallyticabot via Docker, just type:
+To run **Excel SQL Runner** via Docker, just type:
 
 ```
 docker run --name excel-sql-runner dougtrajano/excel-sql-runner
@@ -24,7 +24,7 @@ docker run --name excel-sql-runner dougtrajano/excel-sql-runner
 
 ### Locally
 
-To run Excel SQL Runner locally, just type in your terminal:
+To run **Excel SQL Runner** locally, just type in your terminal:
 
 ```
 git clone https://github.com/DougTrajano/excel-sql-runner.git

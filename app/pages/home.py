@@ -9,6 +9,9 @@ def home_page(state):
     logger.info({"message": "Loading home page."})
     st.title("Excel SQL Runner")
 
+    st.write("Here you can run SQLs on your excel files.")
+    st.write("You can use `Add table` in sidebar menu to upload your excel files to temporary database.")
+
     # Create Database object
     db = Database(file_name=state.db_name)
 

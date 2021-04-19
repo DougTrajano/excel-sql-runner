@@ -21,13 +21,9 @@ def profiling_page(state):
 
     st.write("You can select a table in the list below or create your custom SQL-statement.")
     
-    table = st.selectbox('Table', options=db_tables['name'].tolist(),
-                         help="Select a table in the database.")
-
-    with st.beta_expander("SQL-statement"):
-        query = st.text_area("SQL-statement", value="SELECT * FROM {}".format(table),
-                             height=300,
-                             help="SQL-statement based on SQLite syntax.")
+    query = st.text_area("SQL-statement", value="SELECT * FROM table",
+                            height=300,
+                            help="SQL-statement based on SQLite syntax.")
                              
     st.write(' ')
     

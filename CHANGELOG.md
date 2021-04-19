@@ -17,6 +17,7 @@ Nothing unreleased.
 
 - `Profiling Page` Small change in layout to display SQL-statement always.
 - Improvement in inference process to dtypes in `norm_df_dtypes()`.
+- Disable Streamlit menu by default.
 
 ## [0.1.0] - 2021-04-18
 

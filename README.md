@@ -24,12 +24,29 @@ docker run --name excel-sql-runner dougtrajano/excel-sql-runner
 
 ### Locally
 
-To run **Excel SQL Runner** locally, just type in your terminal:
+To run **Excel SQL Runner** locally.
+
+1. Clone this repository.
 
 ```
 git clone https://github.com/DougTrajano/excel-sql-runner.git
+```
+
+2. Open project folder:
+
+```
 cd excel-sql-runner
+```
+
+3. Install requirements:
+
+```
 pip install -r requirements.txt
+```
+
+4. Launch application:
+
+```
 streamlit run main.py
 ```
 

@@ -10,7 +10,7 @@ No data will be transferred outside the application when executed locally.
 
 If you use the instantiated application, the data will be transferred and temporarily stored on the server.
 
-This [application](https://share.streamlit.io/dougtrajano/excel-sql-runner/main.py) and the source code is a hobby project and have no warranties in this use.
+This [application](https://share.streamlit.io/dougtrajano/excel-sql-runner/main/main.py) and the source code is a hobby project and have no warranties in this use.
 
 ## Installation
 
@@ -35,7 +35,7 @@ streamlit run main.py
 
 ## Can I see a demo?
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/dougtrajano/excel-sql-runner/main.py)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/dougtrajano/excel-sql-runner/main/main.py)
 
 ## Changelogs
 

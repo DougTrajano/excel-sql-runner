@@ -1,12 +1,15 @@
 import streamlit as st
 import logging
 from src.database import Database
-from src.utils import download_link
+from src.utils import excel_download_link
 
 logger = logging.getLogger(__name__)
 
 def home_page(state):
+    logger.info({"message": "Loading home page."})
     st.title("Excel SQL Runner")
+
+    # Create Database object
     db = Database(file_name=state.db_name)
 
     query = st.text_area("SQL-statement", value="SELECT * FROM table",
@@ -15,15 +18,12 @@ def home_page(state):
 
     if st.button("Run query"):
         logger.info({"message": "Running query"})
+
         df_query = db.query(query)
-
-        file_link = download_link(object_to_download=df_query,
-                                  download_filename="{}.csv".format(
-                                      state.db_name),
-                                  download_link_text="Download file")
-        st.markdown(file_link, unsafe_allow_html=True)
-
+        
+        st.markdown(excel_download_link(df_query), unsafe_allow_html=True)
         st.write(df_query.head(1000))
         st.write("Displaying first 1000 rows.")
-
+    
+    logger.info({"message": "Home page loaded."})
     state.sync()

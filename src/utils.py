@@ -1,20 +1,68 @@
 import base64
+import numpy as np
 import pandas as pd
+from io import BytesIO
 
-def download_link(object_to_download, download_filename, download_link_text):
+
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='table', index=False)
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
+
+
+def excel_download_link(df: pd.DataFrame, file_name: str = 'extract.xlsx', link_str: str = 'Download file'):
+    """Generates a link allowing the data in a given panda dataframe to be downloaded
+
+    Arguments:
+    - df: pandas.DataFrame to be converted as excel.
+    - file_name: Excel's file name.
+    - link_str: Link name (string).
+     
+    Returns:
+    - HTML link tag <a></a>
     """
-    Generates a link to download the given object_to_download.
-    object_to_download (str, pd.DataFrame):  The object to be downloaded.
-    download_filename (str): filename and extension of file. e.g. mydata.csv, some_txt_output.txt
-    download_link_text (str): Text to display for download link.
-    Examples:
-    download_link(YOUR_DF, 'YOUR_DF.csv', 'Click here to download data!')
-    download_link(YOUR_STRING, 'YOUR_STRING.txt', 'Click here to download your text!')
+    val = to_excel(df)
+    b64 = base64.b64encode(val)  # val looks like b'...'
+    # decode b'abc' => abc
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download={file_name}>{link_str}</a>'
+
+def norm_df_dtypes(df: pd.DataFrame):
     """
-    if isinstance(object_to_download, pd.DataFrame):
-        object_to_download = object_to_download.to_csv(index=False, encoding="utf-8")
+    Infer Pandas dtypes.
 
-    # some strings <-> bytes conversions necessary here
-    b64 = base64.b64encode(object_to_download.encode()).decode()
+    Arguments:
+    - df: pandas.DataFrame
 
-    return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+    Returns:
+    - df with dtypes identified.
+    """
+    for col in df.columns:
+        dtype = None
+        # Floats
+        try:
+            df[col] = df[col].astype("float")
+            dtype = "float"
+        except:
+            pass
+
+        # Ints
+        if dtype is None:
+            try:
+                df[col] = df[col].astype("int")
+                dtype = "int"
+            except:
+                pass
+
+        # Datetime
+        if dtype is None:
+            try:
+                df[col] = pd.to_datetime(df[col], infer_datetime_format=True, utc=True).astype('datetime64[ns]')
+                dtype = "datetime"
+            except:
+                pass
+
+    df.fillna(np.nan, inplace=True)
+    return df

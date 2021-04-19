@@ -9,6 +9,7 @@ from src.database import Database
 
 logger = logging.getLogger(__name__)
 
+
 class MultiApp:
     """Framework for combining multiple streamlit applications.
     Usage:
@@ -28,41 +29,43 @@ class MultiApp:
         app.add_app("Bar", bar.app)
         app.run()
     """
-
     def __init__(self):
-
         logger.info({"message": "Instantiate MultiApp object."})
-
         self.apps = []
 
-    def add_page(self, title, func):
+    def add_page(self, page_title: str, func):
         """Adds a new page to application.
-        Parameters
-        ----------
-        title:
-            title of the app. Appears in the dropdown in the sidebar.
-        func:
-            the python function to render this app.
+
+        Arguments:
+        - page_title: Page title used by sidebar menu.
+        - func: the python function to render this app.            
         """
 
-        logger.info({"message": "Adding page to app.", "title": title})
+        logger.info({"message": "Adding page to app.", "title": page_title})
 
         self.apps.append({
-            "title": title,
+            "title": page_title,
             "function": func
         })
 
-    def run(self, page_title: str = None, page_icon: str = None, disable_menu: bool = False):
+    def run(self, app_title: str = None, page_icon: str = None, disable_menu: bool = False):
+        """
+        Run Streamlit Data App.
 
+        Arguments:
+        - page_title: Data App title
+        - page_icon: Data App favicon.
+        - disable_menu: Disable Streamlit menu (recommend to production environment).
+        """
         logger.info({"message": "Starting MultiApp."})
 
         state = _get_state()
 
-        st.set_page_config(page_title=page_title, layout="wide",
-                            page_icon=page_icon)
+        st.set_page_config(page_title=app_title, layout="wide",
+                           page_icon=page_icon)
 
-        st.sidebar.title(page_title)
-        
+        st.sidebar.title(app_title)
+
         if disable_menu:
             self.disable_menu()
 
@@ -77,33 +80,49 @@ class MultiApp:
         # Define unique name
         if state.db_name is None:
             logger.info({"message": "Defining database name"})
-            state.db_name = str(int(datetime.datetime.now().timestamp())) + ".sqlite"
+            state.db_name = str(
+                int(datetime.datetime.now().timestamp())) + ".sqlite"
         db = Database(file_name=state.db_name)
 
         with st.sidebar.beta_expander('Add table'):
-            add_table = st.text_input("Table name", value="table",
-                                    help="The name of table that you want to create based on this file.",
-                                    key="add_table")
-
             uploaded_file = st.file_uploader("Upload file",
-                                            type=["xlsx"],
-                                            help="Import excel file.")
+                                             type=["xlsx"],
+                                             help="Import excel file.")
+
+            if uploaded_file is not None:
+                # Check sheet_names
+                xl = pd.ExcelFile(uploaded_file)
+
+                if len(xl.sheet_names) > 1:
+                    sheet_name = st.selectbox('Sheet name',
+                                              options=xl.sheet_names,
+                                              help='Sheet name is the excel tab.')
+                else:
+                    sheet_name = xl.sheet_names[0]
+
+                add_table = st.text_input("Table name",
+                                          value=sheet_name,
+                                          help="Table that will be creatd in database.",
+                                          key="add_table")
 
             if st.button("Add table"):
-                df = pd.read_excel(uploaded_file)
+                df = pd.read_excel(uploaded_file, sheet_name=sheet_name)
                 db.add_table(df, add_table)
 
+        tables = db.show_tables()
+        tables = tables['name'].tolist()
         with st.sidebar.beta_expander("Drop table"):
-            del_table = st.text_input("Table name", value="table",
-                                    help="The name of table that you want to delete.",
-                                    key="del_table")
+            if len(tables) > 0:
+                del_table = st.selectbox('Table name', tables,
+                                         help="The name of table that you want to delete.",
+                                         key="del_table")
 
             if st.button("Drop table"):
                 db.drop_table(del_table)
 
         with st.sidebar.beta_expander("Show tables"):
-            result = db.query("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%';")
-            st.table(result)
+            for table in tables:
+                st.write('- {}'.format(table))
 
         app['function'](state)
 

@@ -1,5 +1,8 @@
 # Excel SQL Runner
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DougTrajano_excel-sql-runner&metric=alert_status)](https://sonarcloud.io/dashboard?id=DougTrajano_excel-sql-runner)
+![GitHub](https://img.shields.io/github/license/DougTrajano/excel-sql-runner)
+
 A data app that allows you to run SQL in excel files. :)
 
 You can create tables in a temporary database to aggregate, joins and all transformation available in SQL.

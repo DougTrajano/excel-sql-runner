@@ -84,7 +84,7 @@ def norm_df_dtypes(df: pd.DataFrame):
         try:
             df[col] = [try_float(i) for i in df[col]]
             dtype = "float"
-        except:
+        except Exception:
             pass
 
         # Ints
@@ -92,7 +92,7 @@ def norm_df_dtypes(df: pd.DataFrame):
             try:
                 df[col] = [try_int(i) for i in df[col]]
                 dtype = "int"
-            except:
+            except Exception:
                 pass
 
         # Datetime
@@ -101,7 +101,7 @@ def norm_df_dtypes(df: pd.DataFrame):
                 df[col] = pd.to_datetime(
                     df[col], infer_datetime_format=True, utc=True).astype('datetime64[ns]')
                 dtype = "datetime"
-            except:
+            except Exception:
                 pass
 
     df.fillna(np.nan, inplace=True)

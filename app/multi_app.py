@@ -187,10 +187,9 @@ class _SessionState:
         if self._state["is_rerun"]:
             self._state["is_rerun"] = False
 
-        elif self._state["hash"] is not None:
-            if self._state["hash"] != self._state["hasher"].to_bytes(self._state["data"], None):
-                self._state["is_rerun"] = True
-                self._state["session"].request_rerun()
+        elif self._state["hash"] is not None and self._state["hash"] != self._state["hasher"].to_bytes(self._state["data"], None):
+            self._state["is_rerun"] = True
+            self._state["session"].request_rerun()
 
         self._state["hash"] = self._state["hasher"].to_bytes(
             self._state["data"], None)

@@ -1,9 +1,9 @@
 import streamlit as st
-import logging
 from src.database import Database
-from src.utils import excel_download_link
+from src.utils import setup_logger, excel_download_link
 
-logger = logging.getLogger(__name__)
+logger = setup_logger()
+
 
 def home_page(state):
     logger.info({"message": "Loading home page."})

@@ -1,10 +1,11 @@
-import logging
 import streamlit as st
 from pandas_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
 from src.database import Database
+from src.utils import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger()
+
 
 def profiling_page(state):
     logger.info({"message": "Loading profiling page."})

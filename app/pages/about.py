@@ -1,7 +1,7 @@
-import logging
 import streamlit as st
+from src.utils import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger()
 
 def about_page(state):
     logger.info({"message": "Loading about page."})

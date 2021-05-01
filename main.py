@@ -1,5 +1,7 @@
-import logging
-logging.basicConfig(level=logging.INFO)
+from src.utils import setup_logger
+
+logger = setup_logger()
+logger.info("excel-sql-runner started.")
 
 from app.multi_app import MultiApp
 from app.pages.home import home_page

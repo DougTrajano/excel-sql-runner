@@ -1,4 +1,3 @@
-import logging
 import datetime
 import pandas as pd
 import streamlit as st
@@ -6,8 +5,9 @@ from streamlit.hashing import _CodeHasher
 from streamlit.report_thread import get_report_ctx
 from streamlit.server.server import Server
 from src.database import Database
+from src.utils import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger()
 
 
 class MultiApp:

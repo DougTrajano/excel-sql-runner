@@ -4,6 +4,16 @@ import numpy as np
 import pandas as pd
 from io import BytesIO
 
+
+def setup_logger():
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s :: %(levelname)s :: %(module)s :: %(funcName)s :: %(message)s')
+
+    logger = logging.getLogger(__name__)
+
+    return logger
+
+
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
@@ -20,7 +30,7 @@ def excel_download_link(df: pd.DataFrame, file_name: str = 'extract.xlsx', link_
     - df: pandas.DataFrame to be converted as excel.
     - file_name: Excel's file name.
     - link_str: Link name (string).
-     
+
     Returns:
     - HTML link tag <a></a>
     """
@@ -29,21 +39,24 @@ def excel_download_link(df: pd.DataFrame, file_name: str = 'extract.xlsx', link_
     # decode b'abc' => abc
     return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download={file_name}>{link_str}</a>'
 
+
 def try_float(value):
     try:
         value = float(value)
-    except:
-        pass
-    finally:
-        return value
+    except Exception as error:
+        logger.error(error)
+
+    return value
+
 
 def try_int(value):
     try:
         value = int(value)
-    except:
-        pass
-    finally:
-        return value
+    except Exception as error:
+        logger.error(error)
+
+    return value
+
 
 def norm_df_dtypes(df: pd.DataFrame):
     """
@@ -76,10 +89,14 @@ def norm_df_dtypes(df: pd.DataFrame):
         # Datetime
         if dtype is None:
             try:
-                df[col] = pd.to_datetime(df[col], infer_datetime_format=True, utc=True).astype('datetime64[ns]')
+                df[col] = pd.to_datetime(
+                    df[col], infer_datetime_format=True, utc=True).astype('datetime64[ns]')
                 dtype = "datetime"
             except:
                 pass
 
     df.fillna(np.nan, inplace=True)
     return df
+
+
+logger = setup_logger()

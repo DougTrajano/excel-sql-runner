@@ -80,8 +80,7 @@ class MultiApp:
         # Define unique name
         if state.db_name is None:
             logger.info({"message": "Defining database name"})
-            state.db_name = str(
-                int(datetime.datetime.now().timestamp())) + ".sqlite"
+            state.db_name = str(int(datetime.datetime.now().timestamp())) + ".sqlite"
         db = Database(file_name=state.db_name)
 
         with st.sidebar.beta_expander('Add table'):
@@ -111,23 +110,19 @@ class MultiApp:
 
         tables = db.show_tables()
         tables = tables['name'].tolist()
-        with st.sidebar.beta_expander("Drop table"):
-            if len(tables) > 0:
+
+        if len(tables) > 0:
+            with st.sidebar.beta_expander("Drop table"):
                 del_table = st.selectbox('Table name', tables,
-                                         help="The name of table that you want to delete.",
-                                         key="del_table")
+                                            help="The name of table that you want to delete.",
+                                            key="del_table")
 
                 if st.button("Drop table"):
                     db.drop_table(del_table)
-            else:
-                st.write("The database has no tables.")
 
-        with st.sidebar.beta_expander("Show tables"):
-            if len(tables) > 0:
+            with st.sidebar.beta_expander("Show tables"):
                 for table in tables:
                     st.write('- {}'.format(table))
-            else:
-                st.write("The database has no tables.")
 
         app['function'](state)
 

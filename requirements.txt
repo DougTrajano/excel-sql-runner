@@ -1,7 +1,7 @@
-pandas==1.2.3
-streamlit==0.80.0
+pandas==1.2.4
+streamlit==0.81.0
 pandas_profiling==2.11.0
-numpy==1.19.2
+numpy==1.20.2
 streamlit_pandas_profiling==0.1.1
 xlrd==1.2.0
 openpyxl==3.0.7

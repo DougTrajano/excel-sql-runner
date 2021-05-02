@@ -52,8 +52,8 @@ def excel_download_link(df: pd.DataFrame, file_name: str = 'extract.xlsx', link_
 def try_float(value):
     try:
         value = float(value)
-    except Exception as error:
-        logger.error(error)
+    except Exception:
+        pass
 
     return value
 
@@ -61,8 +61,8 @@ def try_float(value):
 def try_int(value):
     try:
         value = int(value)
-    except Exception as error:
-        logger.error(error)
+    except Exception:
+        pass
 
     return value
 

@@ -20,19 +20,23 @@ def profiling_page(state):
         logger.warning({"message": "The database has no tables available."})
         st.stop()
 
-    st.write("You can select a table in the list below or create your custom SQL-statement.")
+    st.write("You can select an entire table or create your custom SQL-statement.")
     
-    query = st.text_area("SQL-statement", value="SELECT * FROM table",
-                            height=300,
-                            help="SQL-statement based on SQLite syntax.")
-                             
-    st.write(' ')
+    with st.form(key="profiling_form"):
+        query = st.text_area("SQL-statement", value="SELECT * FROM table",
+                                height=300,
+                                help="SQL-statement based on SQLite syntax.")
+                                
+        st.write(' ')
     
-    if st.button("Profiling"):
-        logger.info({"message": "Profiling Table."})
+        if st.form_submit_button(label='Profiling'):
+            logger.info({"message": "Profiling Table."})
 
-        df_query = db.query(query)
+            df_query = db.query(query)
+        else:
+            df_query = None
 
+    if df_query is not None:
         pr = ProfileReport(df_query, explorative=True, dark_mode=True)
         st_profile_report(pr)
 

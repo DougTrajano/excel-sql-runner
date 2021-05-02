@@ -117,12 +117,17 @@ class MultiApp:
                                          help="The name of table that you want to delete.",
                                          key="del_table")
 
-            if st.button("Drop table"):
-                db.drop_table(del_table)
+                if st.button("Drop table"):
+                    db.drop_table(del_table)
+            else:
+                st.write("The database has no tables.")
 
         with st.sidebar.beta_expander("Show tables"):
-            for table in tables:
-                st.write('- {}'.format(table))
+            if len(tables) > 0:
+                for table in tables:
+                    st.write('- {}'.format(table))
+            else:
+                st.write("The database has no tables.")
 
         app['function'](state)
 

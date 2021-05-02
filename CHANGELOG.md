@@ -11,6 +11,25 @@ Nothing unreleased.
 
 ---
 
+## [0.1.4] - 2021-04-XX
+
+## Changed
+
+- The user experience has been improved with `st.form` to not run the application until the user presses the button.
+
+## [0.1.3] - 2021-04-XX
+
+## Changed
+
+- New log logic for all the application.
+- Refactored code smells identified in Sonar Analysis.
+
+## [0.1.2] - 2021-04-XX
+
+### Changed
+
+- Add more dependencies in `requirements.txt`
+
 ## [0.1.1] - 2021-04-18
 
 ### Changed

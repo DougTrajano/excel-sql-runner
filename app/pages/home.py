@@ -5,7 +5,7 @@ from src.utils import setup_logger, excel_download_link
 logger = setup_logger()
 
 
-def home_page(state):
+def home_page():
     logger.info({"message": "Loading home page."})
     st.title("Excel SQL Runner")
 
@@ -13,7 +13,7 @@ def home_page(state):
     st.write("You can use `Add table` in sidebar menu to upload your excel files to temporary database.")
 
     # Create Database object
-    db = Database(file_name=state.db_name)
+    db = Database(file_name=st.session_state.db_name)
 
     with st.form(key="home_form"):
         query = st.text_area("SQL-statement", value="SELECT * FROM table",
@@ -38,4 +38,3 @@ def home_page(state):
             st.write("Displaying {} rows.".format(len(df_query)))
     
     logger.info({"message": "Home page loaded."})
-    state.sync()

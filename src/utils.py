@@ -1,3 +1,5 @@
+import os
+import pathlib
 import base64
 import logging
 import numpy as np
@@ -6,19 +8,19 @@ from io import BytesIO
 
 
 def setup_logger():
-    # Define formatter
-    formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(module)s :: %(funcName)s :: %(message)s')
-
-    # Define handler
-    handler = logging.StreamHandler()
-    handler.setFormatter(formatter)
-
     # Create logger instance
     logger = logging.getLogger(__name__)
-    logger.addHandler(handler)
 
-    # Set logging level
-    logger.setLevel(logging.INFO)
+    if not logger.handlers:
+        # Define formatter
+        formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(module)s :: %(funcName)s :: %(message)s')
+
+        # Define handler
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+
+        logger.setLevel(logging.INFO)
+        logger.addHandler(handler)
     
     return logger
 
@@ -107,5 +109,14 @@ def norm_df_dtypes(df: pd.DataFrame):
     df.fillna(np.nan, inplace=True)
     return df
 
+def remove_files_by_extension(path: str = None, extension: str = ".sqlite"):
+    """Remove files from a given path based on a given extension."""
+    if path is None:
+        path = pathlib.Path(__name__).parent.resolve() 
+    
+    for file in os.listdir(path):
+        if file.endswith(extension):
+            logger.info(f'Removing file {file}')
+            os.remove(os.path.join(path, file))
 
 logger = setup_logger()

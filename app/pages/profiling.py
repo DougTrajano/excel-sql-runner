@@ -7,12 +7,12 @@ from src.utils import setup_logger
 logger = setup_logger()
 
 
-def profiling_page(state):
+def profiling_page():
     logger.info({"message": "Loading profiling page."})
     st.title("Profiling Tables")
 
     # Select table
-    db = Database(file_name=state.db_name)
+    db = Database(file_name=st.session_state.db_name)
     db_tables = db.show_tables()
 
     if len(db_tables) == 0:
@@ -41,4 +41,3 @@ def profiling_page(state):
         st_profile_report(pr)
 
     logger.info({"message": "Profiling page loaded."})
-    state.sync()

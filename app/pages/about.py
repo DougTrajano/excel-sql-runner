@@ -3,7 +3,7 @@ from src.utils import setup_logger
 
 logger = setup_logger()
 
-def about_page(state):
+def about_page():
     logger.info({"message": "Loading about page."})
     st.title("About Excel SQL Runner")
     
@@ -20,5 +20,3 @@ def about_page(state):
 
     st.subheader("Terms of use")
     st.write("This application and the source code is a hobby project and have no warranties in this use.")
-
-    state.sync()

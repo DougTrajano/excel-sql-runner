@@ -1,2 +1,8 @@
 [logger]
 messageFormat = "%(asctime)s :: %(levelname)s :: %(module)s :: %(funcName)s :: %(message)s"
+
+[theme]
+primaryColor="#1D6F42"
+backgroundColor="#22272e"
+secondaryBackgroundColor="#2d333b"
+textColor="#adbac4"

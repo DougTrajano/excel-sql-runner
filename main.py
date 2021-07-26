@@ -13,4 +13,4 @@ app.add_page("Home", home_page)
 app.add_page("Profiling", profiling_page)
 app.add_page("About", about_page)
 
-app.run(app_title="Excel SQL Runner", disable_menu=False)
+app.run(app_title="Excel SQL Runner", disable_menu=True)

@@ -22,7 +22,7 @@ This [application](https://share.streamlit.io/dougtrajano/excel-sql-runner/main/
 To run **Excel SQL Runner** via Docker, just type:
 
 ```
-docker run --name excel-sql-runner dougtrajano/excel-sql-runner
+docker run -d -p 8501:8501 --name excel-sql-runner dougtrajano/excel-sql-runner
 ```
 
 ### Locally

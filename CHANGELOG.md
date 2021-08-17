@@ -11,20 +11,41 @@ Nothing unreleased.
 
 ---
 
-## [0.1.4] - 2021-04-XX
+## [1.1.0] - 2021-07-27
+
+### Changed
+
+- Added a new UI theme for this application.
+
+### Bug fixes
+
+- Disabled Streamlit menu.
+
+## [1.0.0] - 2021-07-17
+
+### Changed
+
+- All libs was updated to the latest version
+- We changed the session state custom implementation to Streamlit built-in session state.
+
+### Bug fixes
+
+- Now the Clear Session button will delete session state and all .sqlite files in the current folder.
+
+## [0.1.4] - 2021-05-02
 
 ## Changed
 
 - The user experience has been improved with `st.form` to not run the application until the user presses the button.
 
-## [0.1.3] - 2021-04-XX
+## [0.1.3] - 2021-05-01
 
 ## Changed
 
 - New log logic for all the application.
 - Refactored code smells identified in Sonar Analysis.
 
-## [0.1.2] - 2021-04-XX
+## [0.1.2] - 2021-04-19
 
 ### Changed
 

@@ -1,5 +1,5 @@
 pandas==1.4.4
-streamlit==0.89.0
+streamlit==1.14.0
 pandas_profiling==3.3.0
 numpy==1.23.3
 streamlit_pandas_profiling==0.1.3
